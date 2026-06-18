@@ -1,7 +1,7 @@
-import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = BASE_DIR / 'templates'
 
 SECRET_KEY = 'django-insecure-your-secret-key-here'
 
@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
     'blog.apps.BlogConfig',
     'pages.apps.PagesConfig',
 ]
@@ -86,6 +87,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_REDIRECT_URL = 'blog:index'
 LOGOUT_REDIRECT_URL = 'blog:index'
 LOGIN_URL = 'login'
+
+# CSRF ошибка
+CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
 
 # Email бэкенд для разработки
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

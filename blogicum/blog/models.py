@@ -36,7 +36,9 @@ class Location(models.Model):
 class Post(models.Model):
     title = models.CharField('Заголовок', max_length=256)
     text = models.TextField('Текст')
-    pub_date = models.DateTimeField('Дата и время публикации', default=timezone.now)
+    pub_date = models.DateTimeField(
+        'Дата и время публикации', default=timezone.now
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -77,11 +79,17 @@ class Post(models.Model):
 
     def is_visible(self, user=None):
         """Проверка, виден ли пост пользователю"""
-        if self.is_published and self.pub_date <= timezone.now():
-            return True
-        if user and user == self.author:
-            return True
-        return False
+        if not self.is_published or not self.category.is_published:
+            if user and user == self.author:
+                return True
+            return False
+
+        if self.pub_date > timezone.now():
+            if user and user == self.author:
+                return True
+            return False
+
+        return True
 
 
 class Comment(models.Model):
@@ -107,4 +115,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Комментарий от {self.author} к {self.post}'
-    

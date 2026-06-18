@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 
-{% block title %}Регистрация{% endblock %}
+{% block title %}Редактирование комментария{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -9,17 +9,15 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="mb-0">Регистрация</h3>
+                    <h3 class="mb-0">Редактирование комментария</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'registration' %}">
+                    <form method="post">
                         {% csrf_token %}
                         {% bootstrap_form form %}
-                        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <a href="{% url 'blog:post_detail' post_id %}" class="btn btn-secondary">Отмена</a>
                     </form>
-                    <p class="mt-3 text-center">
-                        Уже есть аккаунт? <a href="{% url 'login' %}">Войдите</a>
-                    </p>
                 </div>
             </div>
         </div>
